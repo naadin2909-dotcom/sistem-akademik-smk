@@ -1,0 +1,31 @@
+@startuml Sequence Diagram - Input Absensi
+!theme plain
+title Sequence Diagram - Input Absensi Flow
+
+actor "Guru/Admin" as G
+participant "Web Router" as W
+participant "AbsensiController" as AC
+database "Database" as DB
+
+== Input Absensi Process ==
+
+G -> W : GET /absensi/create
+W -> AC : create()
+AC -> DB : Query kelas, jadwal
+DB --> AC : Data kelas & jadwal
+AC --> W : Form input absensi
+W --> G : Tampilkan form
+
+G -> W : POST /absensi (kelas_id, jadwal_id, tanggal, statuses[])
+W -> AC : store(StoreAbsensiRequest)
+AC -> AC : Validasi input
+
+loop Untuk setiap siswa
+    AC -> DB : Absensi::updateOrCreate()
+    DB --> AC : Berhasil disimpan
+end
+
+AC --> W : Redirect to index
+W --> G : Tampilkan daftar absensi dengan success message
+
+@enduml

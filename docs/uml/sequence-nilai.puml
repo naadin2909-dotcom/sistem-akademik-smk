@@ -1,0 +1,31 @@
+@startuml Sequence Diagram - Input Nilai
+!theme plain
+title Sequence Diagram - Input Nilai Flow
+
+actor Guru as G
+participant "Web Router" as W
+participant "NilaiController" as NC
+participant "Nilai Model" as N
+database "Database" as DB
+
+== Input Nilai Process ==
+
+G -> W : GET /nilai/create
+W -> NC : create()
+NC -> DB : Query kelas, jadwal milik guru
+DB --> NC : Data kelas & jadwal
+NC --> W : Form input nilai
+W --> G : Tampilkan form
+
+G -> W : POST /nilai (siswa_id, mapel_id, tugas, uts, uas)
+W -> NC : store(Request)
+NC -> N : hitungNilaiAkhir(tugas, uts, uas)
+N --> NC : nilai_akhir
+NC -> N : hitungPredikat(nilai_akhir)
+N --> NC : predikat
+NC -> DB : Nilai::updateOrCreate()
+DB --> NC : Berhasil disimpan
+NC --> W : Redirect to index
+W --> G : Tampilkan daftar nilai dengan success message
+
+@enduml

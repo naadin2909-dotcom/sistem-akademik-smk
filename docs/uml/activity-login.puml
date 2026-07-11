@@ -1,0 +1,66 @@
+@startuml Activity Diagram - Login
+!theme plain
+title Activity Diagram - Login Flow
+
+|User|
+start
+:Input Email & Password;
+:Submit Login Form;
+
+|System|
+:Validasi Input;
+
+if (Input Valid?) then (Tidak)
+    :Tampilkan Error Message;
+    |User|
+    :Input Ulang;
+    detach
+else (Ya)
+endif
+
+:Query Database - Cek User;
+
+if (User Exists?) then (Tidak)
+    :Tampilkan Error "User Tidak Ditemukan";
+    |User|
+    :Input Ulang;
+    detach
+else (Ya)
+endif
+
+:Validasi Password;
+
+if (Password Valid?) then (Tidak)
+    :Tampilkan Error "Password Salah";
+    |User|
+    :Input Ulang;
+    detach
+else (Ya)
+endif
+
+:Cek Status Akun;
+
+if (Akun Aktif?) then (Tidak)
+    :Tampilkan Error "Akun Tidak Aktif";
+    |User|
+    :Hubungi Admin;
+    detach
+else (Ya)
+endif
+
+:Dapatkan Role User;
+
+switch (Role User?)
+case (Admin)
+    :Redirect ke Admin Dashboard;
+case (Guru)
+    :Redirect ke Guru Dashboard;
+case (Siswa)
+    :Redirect ke Siswa Dashboard;
+endswitch
+
+|User|
+:Tampilkan Dashboard;
+stop
+
+@enduml

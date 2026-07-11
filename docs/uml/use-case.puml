@@ -1,0 +1,86 @@
+@startuml Use Case Diagram
+!theme plain
+title Use Case Diagram - Sistem Akademik SMK
+
+left to right direction
+
+actor "Admin" as Admin
+actor "Guru" as Guru
+actor "Siswa" as Siswa
+
+rectangle "Sistem Akademik SMK" {
+
+    package "Authentication" {
+        usecase "Login" as UC_Login
+        usecase "Logout" as UC_Logout
+        usecase "Update Profile" as UC_Profile
+    }
+
+    package "Admin Features" {
+        usecase "Manage Jurusan" as UC_ManageJurusan
+        usecase "Manage Kelas" as UC_ManageKelas
+        usecase "Manage Guru" as UC_ManageGuru
+        usecase "Manage Siswa" as UC_ManageSiswa
+        usecase "Manage Mata Pelajaran" as UC_ManageMapel
+        usecase "Manage Jadwal" as UC_ManageJadwal
+        usecase "Manage Absensi" as UC_ManageAbsensi
+        usecase "Export Absensi" as UC_ExportAbsensi
+        usecase "Manage Rapor" as UC_ManageRapor
+        usecase "Manage PKL" as UC_ManagePKL
+        usecase "View Laporan" as UC_ViewLaporan
+        usecase "Manage User" as UC_ManageUser
+    }
+
+    package "Guru Features" {
+        usecase "Input Absensi" as UC_InputAbsensi
+        usecase "Input Nilai" as UC_InputNilai
+        usecase "Input Nilai PKL" as UC_InputNilaiPKL
+        usecase "Lihat Jadwal" as UC_LihatJadwalGuru
+    }
+
+    package "Siswa Features" {
+        usecase "Lihat Jadwal" as UC_LihatJadwalSiswa
+        usecase "Lihat Absensi" as UC_LihatAbsensi
+        usecase "Lihat Nilai" as UC_LihatNilai
+        usecase "Lihat & Cetak Rapor" as UC_LihatRapor
+        usecase "Lihat PKL" as UC_LihatPKL
+    }
+}
+
+Admin --> UC_Login
+Admin --> UC_Logout
+Admin --> UC_Profile
+Admin --> UC_ManageJurusan
+Admin --> UC_ManageKelas
+Admin --> UC_ManageGuru
+Admin --> UC_ManageSiswa
+Admin --> UC_ManageMapel
+Admin --> UC_ManageJadwal
+Admin --> UC_ManageAbsensi
+Admin --> UC_ExportAbsensi
+Admin --> UC_ManageRapor
+Admin --> UC_ManagePKL
+Admin --> UC_ViewLaporan
+Admin --> UC_ManageUser
+
+Guru --> UC_Login
+Guru --> UC_Logout
+Guru --> UC_Profile
+Guru --> UC_InputAbsensi
+Guru --> UC_InputNilai
+Guru --> UC_InputNilaiPKL
+Guru --> UC_LihatJadwalGuru
+
+Siswa --> UC_Login
+Siswa --> UC_Logout
+Siswa --> UC_Profile
+Siswa --> UC_LihatJadwalSiswa
+Siswa --> UC_LihatAbsensi
+Siswa --> UC_LihatNilai
+Siswa --> UC_LihatRapor
+Siswa --> UC_LihatPKL
+
+UC_ExportAbsensi ..> UC_ManageAbsensi : <<include>>
+UC_LihatRapor ..> UC_LihatNilai : <<include>>
+
+@enduml

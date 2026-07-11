@@ -1,0 +1,35 @@
+@startuml Sequence Diagram - Generate Rapor
+!theme plain
+title Sequence Diagram - Generate Rapor Flow
+
+actor Admin as A
+participant "Web Router" as W
+participant "RaporController" as RC
+participant "Rapor Model" as R
+participant "Nilai Model" as N
+database "Database" as DB
+
+== Generate Rapor Process ==
+
+A -> W : POST /rapor/generate (kelas_id, semester, tahun_ajaran)
+W -> RC : generate(Request)
+RC -> DB : Query siswa per kelas
+
+loop Untuk setiap siswa
+    RC -> N : Query nilai per siswa
+    N --> RC : Daftar nilai
+    RC -> RC : Hitung rata-rata nilai
+    RC -> RC : Hitung predikat umum
+
+    alt Belum ada rapor
+        RC -> DB : Rapor::create()
+    else Sudah ada rapor
+        RC -> DB : Rapor::update()
+    end
+    DB --> RC : Berhasil disimpan
+end
+
+RC --> W : Redirect to index
+W --> A : Tampilkan daftar rapor dengan success message
+
+@enduml

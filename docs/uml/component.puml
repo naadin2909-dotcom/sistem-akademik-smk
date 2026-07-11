@@ -1,0 +1,63 @@
+@startuml Component Diagram
+!theme plain
+title Component Diagram - Sistem Akademik SMK
+
+package "Presentation Layer" #E3F2FD {
+    [Admin Views] as AdminViews
+    [Guru Views] as GuruViews
+    [Siswa Views] as SiswaViews
+    [Auth Views] as AuthViews
+}
+
+package "Application Layer" #E8F5E9 {
+    [Admin Controllers] as AdminControllers
+    [Guru Controllers] as GuruControllers
+    [Siswa Controllers] as SiswaControllers
+    [Auth Controllers] as AuthControllers
+    [Form Requests] as FormRequests
+    [Middleware (CheckRole)] as Middleware
+}
+
+package "Domain Layer" #FFF3E0 {
+    [Eloquent Models] as Models
+    [Model Relationships] as Relationships
+    [Business Logic] as BusinessLogic
+}
+
+package "Infrastructure Layer" #F3E5F5 {
+    database "Database (MySQL/SQLite)" as Database
+    [Export Classes (Excel)] as Exports
+    [Spatie Permission] as Permissions
+}
+
+' Presentation to Application
+AdminViews --> AdminControllers
+GuruViews --> GuruControllers
+SiswaViews --> SiswaControllers
+AuthViews --> AuthControllers
+
+' Application internal
+AdminControllers --> FormRequests
+GuruControllers --> FormRequests
+SiswaControllers --> FormRequests
+
+AdminControllers --> Middleware
+GuruControllers --> Middleware
+SiswaControllers --> Middleware
+
+' Application to Domain
+AdminControllers --> Models
+GuruControllers --> Models
+SiswaControllers --> Models
+AuthControllers --> Models
+
+' Domain internal
+Models --> Relationships
+Models --> BusinessLogic
+
+' Domain to Infrastructure
+Models --> Database
+AdminControllers --> Exports
+Models --> Permissions
+
+@enduml

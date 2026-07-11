@@ -1,0 +1,55 @@
+@startuml Activity Diagram - Input Absensi
+!theme plain
+title Activity Diagram - Input Absensi Flow
+
+|Guru/Admin|
+start
+:Pilih Kelas;
+:Pilih Jadwal Pelajaran;
+:Pilih Tanggal;
+
+|System|
+:Load Daftar Siswa;
+
+|Guru/Admin|
+:Input Status per Siswa
+(Hadir/Izin/Sakit/Alpa);
+
+:Input Keterangan (opsional);
+
+:Submit Form Absensi;
+
+|System|
+:Validasi Input;
+
+if (Input Valid?) then (Tidak)
+    :Tampilkan Error Message;
+    |Guru/Admin|
+    :Koreksi Input;
+    detach
+else (Ya)
+endif
+
+:Simpan Data Absensi;
+
+repeat
+    :Pilih Siswa;
+    :Cek Data Absensi;
+    
+    if (Data Sudah Ada?) then (Ya)
+        :Update Status Absensi;
+    else (Tidak)
+        :Buat Data Absensi Baru;
+    endif
+    
+repeat while (Masih ada siswa?) is (Ya)
+->Tidak;
+
+:Redirect ke Daftar Absensi;
+:Tampilkan Success Message;
+
+|Guru/Admin|
+:Tampilkan Daftar Absensi;
+stop
+
+@enduml

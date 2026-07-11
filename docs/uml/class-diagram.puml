@@ -1,0 +1,191 @@
+@startuml Class Diagram
+!theme plain
+title Class Diagram - Sistem Akademik SMK
+
+class User {
+    -int id
+    -string name
+    -string email
+    -string role
+    -bool is_active
+    +isAdmin() bool
+    +isGuru() bool
+    +isSiswa() bool
+}
+
+class Guru {
+    -int id
+    -int user_id
+    -string nip
+    -string nama_lengkap
+    -string jenis_kelamin
+    -string tempat_lahir
+    -date tanggal_lahir
+    -string alamat
+    -string no_telp
+    -string mata_pelajaran
+    -string foto
+}
+
+class Siswa {
+    -int id
+    -int user_id
+    -string nis
+    -string nisn
+    -string nama_lengkap
+    -int kelas_id
+    -string jenis_kelamin
+    -string tempat_lahir
+    -date tanggal_lahir
+    -string alamat
+    -string nama_ortu
+    -string no_telp_ortu
+    -string foto
+    -string angkatan
+}
+
+class Kelas {
+    -int id
+    -string nama_kelas
+    -int jurusan_id
+    -int tingkat
+    -string tahun_ajaran
+    -int wali_kelas_id
+}
+
+class Jurusan {
+    -int id
+    -string kode_jurusan
+    -string nama_jurusan
+    -string deskripsi
+}
+
+class MataPelajaran {
+    -int id
+    -string kode_mapel
+    -string nama_mapel
+    -string kelompok
+    -int jurusan_id
+}
+
+class Jadwal {
+    -int id
+    -int kelas_id
+    -int mata_pelajaran_id
+    -int guru_id
+    -string hari
+    -time jam_mulai
+    -time jam_selesai
+    -string ruangan
+    -int semester
+    -string tahun_ajaran
+}
+
+class Absensi {
+    -int id
+    -int siswa_id
+    -int jadwal_id
+    -date tanggal
+    -string status
+    -string keterangan
+    -int input_by
+}
+
+class Nilai {
+    -int id
+    -int siswa_id
+    -int mata_pelajaran_id
+    -int kelas_id
+    -int guru_id
+    -int semester
+    -string tahun_ajaran
+    -decimal tugas
+    -decimal uts
+    -decimal uas
+    -decimal nilai_akhir
+    -string predikat
+    +hitungNilaiAkhir() decimal
+    +hitungPredikat() string
+}
+
+class Rapor {
+    -int id
+    -int siswa_id
+    -int kelas_id
+    -int semester
+    -string tahun_ajaran
+    -decimal rata_rata_nilai
+    -string predikat_umum
+    -string catatan_wali
+    -int generated_by
+    -string status
+}
+
+class Pkl {
+    -int id
+    -int siswa_id
+    -int guru_id
+    -string perusahaan
+    -string alamat_perusahaan
+    -string kontak_perusahaan
+    -date tanggal_mulai
+    -date tanggal_selesai
+    -string status
+    -string catatan
+}
+
+class NilaiPkl {
+    -int id
+    -int pkl_id
+    -decimal pengetahuan
+    -decimal keterampilan
+    -decimal sikap
+    -decimal nilai_akhir
+    -string predikat
+}
+
+User "1" *-- "1" Guru : has
+User "1" *-- "1" Siswa : has
+
+Guru "1" o-- "*" Jadwal : teaches
+Guru "1" o-- "*" Kelas : wali_kelas
+Guru "1" o-- "*" Pkl : pembimbing
+
+Siswa "*" --> "1" Kelas : belongs_to
+Siswa "1" o-- "*" Absensi : has
+Siswa "1" o-- "*" Nilai : has
+Siswa "1" *-- "1" Rapor : has
+Siswa "1" *-- "0..1" Pkl : has
+
+Kelas "*" --> "1" Jurusan : belongs_to
+Kelas "1" o-- "*" Siswa : has
+Kelas "1" o-- "*" Jadwal : has
+Kelas "1" o-- "*" Nilai : has
+
+MataPelajaran "*" --> "1" Jurusan : belongs_to
+MataPelajaran "1" o-- "*" Jadwal : has
+MataPelajaran "1" o-- "*" Nilai : has
+
+Jadwal "*" --> "1" Kelas : belongs_to
+Jadwal "*" --> "1" MataPelajaran : belongs_to
+Jadwal "*" --> "1" Guru : belongs_to
+Jadwal "1" o-- "*" Absensi : has
+
+Absensi "*" --> "1" Siswa : belongs_to
+Absensi "*" --> "1" Jadwal : belongs_to
+
+Nilai "*" --> "1" Siswa : belongs_to
+Nilai "*" --> "1" MataPelajaran : belongs_to
+Nilai "*" --> "1" Kelas : belongs_to
+Nilai "*" --> "1" Guru : belongs_to
+
+Rapor "*" --> "1" Siswa : belongs_to
+Rapor "*" --> "1" Kelas : belongs_to
+
+Pkl "*" --> "1" Siswa : belongs_to
+Pkl "*" --> "1" Guru : belongs_to
+Pkl "1" *-- "0..1" NilaiPkl : has
+
+NilaiPkl "*" --> "1" Pkl : belongs_to
+
+@enduml

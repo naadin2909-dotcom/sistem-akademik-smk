@@ -1,0 +1,33 @@
+@startuml Sequence Diagram - Login
+!theme plain
+title Sequence Diagram - Login Flow
+
+actor User as U
+participant "Web Router" as W
+participant "LoginController" as LC
+participant "Auth System" as Auth
+database "Database" as DB
+
+== Login Process ==
+
+U -> W : GET /login
+W -> LC : showLoginForm()
+LC --> U : Tampilkan form login
+
+U -> W : POST /login (email, password)
+W -> LC : login(Request)
+LC -> Auth : attempt(email, password)
+Auth -> DB : Query users table
+DB --> Auth : User data
+Auth --> LC : true/false
+
+alt Login Berhasil
+    LC -> DB : Update last_login
+    LC --> W : Redirect to dashboard
+    W --> U : Dashboard sesuai role
+else Login Gagal
+    LC --> W : Back with errors
+    W --> U : Tampilkan error message
+end
+
+@enduml

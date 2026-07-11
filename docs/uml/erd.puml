@@ -1,0 +1,230 @@
+@startuml Entity Relationship Diagram
+!theme plain
+title Entity Relationship Diagram (ERD) - Sistem Akademik SMK
+
+entity "users" as users {
+    *id : int <<PK>>
+    --
+    name : varchar
+    email : varchar <<UK>>
+    password : varchar
+    role : enum(admin, guru, siswa)
+    is_active : boolean
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "gurus" as gurus {
+    *id : int <<PK>>
+    --
+    user_id : int <<FK>>
+    nip : varchar <<UK>>
+    nama_lengkap : varchar
+    jenis_kelamin : enum(Laki-laki, Perempuan)
+    tempat_lahir : varchar
+    tanggal_lahir : date
+    alamat : text
+    no_telp : varchar
+    mata_pelajaran : varchar
+    foto : varchar
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "siswas" as siswas {
+    *id : int <<PK>>
+    --
+    user_id : int <<FK>>
+    nis : varchar <<UK>>
+    nisn : varchar <<UK>>
+    nama_lengkap : varchar
+    kelas_id : int <<FK>>
+    jenis_kelamin : enum(Laki-laki, Perempuan)
+    tempat_lahir : varchar
+    tanggal_lahir : date
+    alamat : text
+    nama_ortu : varchar
+    no_telp_ortu : varchar
+    foto : varchar
+    angkatan : varchar
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "jurusans" as jurusans {
+    *id : int <<PK>>
+    --
+    kode_jurusan : varchar <<UK>>
+    nama_jurusan : varchar
+    deskripsi : text
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "kelas" as kelas {
+    *id : int <<PK>>
+    --
+    nama_kelas : varchar
+    jurusan_id : int <<FK>>
+    tingkat : int
+    tahun_ajaran : varchar
+    wali_kelas_id : int <<FK>>
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "mata_pelajarans" as mata_pelajarans {
+    *id : int <<PK>>
+    --
+    kode_mapel : varchar <<UK>>
+    nama_mapel : varchar
+    kelompok : varchar
+    jurusan_id : int <<FK>>
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "jadwals" as jadwals {
+    *id : int <<PK>>
+    --
+    kelas_id : int <<FK>>
+    mata_pelajaran_id : int <<FK>>
+    guru_id : int <<FK>>
+    hari : varchar
+    jam_mulai : time
+    jam_selesai : time
+    ruangan : varchar
+    semester : int
+    tahun_ajaran : varchar
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "absensis" as absensis {
+    *id : int <<PK>>
+    --
+    siswa_id : int <<FK>>
+    jadwal_id : int <<FK>>
+    tanggal : date
+    status : enum(Hadir, Izin, Sakit, Alpa)
+    keterangan : text
+    input_by : int <<FK>>
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "nilais" as nilais {
+    *id : int <<PK>>
+    --
+    siswa_id : int <<FK>>
+    mata_pelajaran_id : int <<FK>>
+    kelas_id : int <<FK>>
+    guru_id : int <<FK>>
+    semester : int
+    tahun_ajaran : varchar
+    tugas : decimal
+    uts : decimal
+    uas : decimal
+    nilai_akhir : decimal
+    predikat : char
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "rapors" as rapors {
+    *id : int <<PK>>
+    --
+    siswa_id : int <<FK>>
+    kelas_id : int <<FK>>
+    semester : int
+    tahun_ajaran : varchar
+    rata_rata_nilai : decimal
+    predikat_umum : char
+    catatan_wali : text
+    generated_by : int <<FK>>
+    status : enum(draft, final)
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "pkls" as pkls {
+    *id : int <<PK>>
+    --
+    siswa_id : int <<FK>>
+    guru_id : int <<FK>>
+    perusahaan : varchar
+    alamat_perusahaan : text
+    kontak_perusahaan : varchar
+    tanggal_mulai : date
+    tanggal_selesai : date
+    status : enum(aktif, selesai, dibatalkan)
+    catatan : text
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity "nilai_pkls" as nilai_pkls {
+    *id : int <<PK>>
+    --
+    pkl_id : int <<FK>>
+    pengetahuan : decimal
+    keterampilan : decimal
+    sikap : decimal
+    nilai_akhir : decimal
+    predikat : char
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+users ||--|| gurus : "has"
+users ||--|| siswas : "has"
+users ||--o{ absensis : "inputs"
+users ||--o{ rapors : "generates"
+
+jurusans ||--o{ kelas : "has"
+jurusans ||--o{ mata_pelajarans : "has"
+
+kelas ||--o{ siswas : "has"
+kelas ||--o{ jadwals : "has"
+kelas ||--o{ nilais : "has"
+kelas ||--o{ rapors : "has"
+kelas }o--|| jurusans : "belongs_to"
+kelas }o--|| gurus : "wali_kelas"
+
+gurus ||--o{ jadwals : "teaches"
+gurus ||--o{ pkls : "supervises"
+gurus ||--o{ nilais : "grades"
+
+siswas ||--o{ absensis : "has"
+siswas ||--o{ nilais : "has"
+siswas ||--|| rapors : "has"
+siswas ||--|| pkls : "has"
+siswas }o--|| kelas : "belongs_to"
+
+mata_pelajarans ||--o{ jadwals : "scheduled"
+mata_pelajarans ||--o{ nilais : "graded"
+mata_pelajarans }o--|| jurusans : "belongs_to"
+
+jadwals ||--o{ absensis : "tracked"
+jadwals }o--|| kelas : "belongs_to"
+jadwals }o--|| mata_pelajarans : "belongs_to"
+jadwals }o--|| gurus : "belongs_to"
+
+absensis }o--|| siswas : "belongs_to"
+absensis }o--|| jadwals : "belongs_to"
+
+nilais }o--|| siswas : "belongs_to"
+nilais }o--|| mata_pelajarans : "belongs_to"
+nilais }o--|| kelas : "belongs_to"
+nilais }o--|| gurus : "belongs_to"
+
+rapors }o--|| siswas : "belongs_to"
+rapors }o--|| kelas : "belongs_to"
+
+pkls }o--|| siswas : "belongs_to"
+pkls }o--|| gurus : "belongs_to"
+pkls ||--o| nilai_pkls : "has"
+
+nilai_pkls }o--|| pkls : "belongs_to"
+
+@enduml
