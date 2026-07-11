@@ -1059,29 +1059,6 @@ graph TD
     style Infrastructure fill:#F3E5F5,stroke:#6A1B9A
 ```
 
-### Diagram yang Direkomendasikan
-
-1. **Use Case Diagram**
-   - Aktor: Admin, Guru, Siswa
-   - Sistem: Autentikasi, Manajemen Data, Akademik, Laporan
-
-2. **Class Diagram**
-   - Models: User, Guru, Siswa, Kelas, Jurusan, MataPelajaran, Jadwal, Absensi, Nilai, Rapor, Pkl, NilaiPkl
-   - Relasi: belongsTo, hasMany, hasManyThrough
-
-3. **Sequence Diagram**
-   - Login Flow
-   - Input Absensi Flow
-   - Input Nilai Flow
-   - Generate Rapor Flow
-
-4. **Activity Diagram**
-   - Login Activity
-   - Input Absensi Activity
-   - Input Nilai Activity
-
-5. **ERD (Entity Relationship Diagram)**
-   - Tabel: users, gurus, siswas, kelas, jurusans, mata_pelajarans, jadwals, absensis, nilais, rapors, pkls, nilai_pkls
 
 ## Development
 
