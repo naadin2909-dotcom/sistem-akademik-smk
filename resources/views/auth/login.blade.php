@@ -26,106 +26,63 @@
 
         .login-wrapper {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
         }
 
         .login-card {
             background: #ffffff;
             border-radius: 24px;
-            padding: 40px 35px;
+            padding: 40px 35px 35px;
             text-align: center;
         }
 
         .login-logo {
-            width: 200px;
+            width: 180px;
             height: auto;
-            margin: -20px auto 10px;
+            margin: 0 auto 15px;
             display: block;
             object-fit: contain;
             mix-blend-mode: multiply;
         }
 
         .login-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 26px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 28px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             text-align: left;
         }
 
         .form-input {
             width: 100%;
-            padding: 14px 22px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
             font-size: 15px;
             font-family: 'Poppins', sans-serif;
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.15);
+            color: #374151;
+            background: #e8e8e8;
             transition: all 0.3s ease;
             outline: none;
         }
 
         .form-input:focus {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+            background: #e0e0e0;
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
         }
 
         .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .remember-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding: 0 5px;
-        }
-
-        .remember-check {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .remember-check input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #7C3AED;
-            cursor: pointer;
-        }
-
-        .remember-check label {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            cursor: pointer;
-        }
-
-        .forgot-link {
-            font-size: 14px;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .forgot-link:hover {
-            color: #e0d4ff;
-            text-decoration: underline;
+            color: #888888;
         }
 
         .btn-login {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #7C3AED 0%, #6B21A8 100%);
+            background: #9b7fd4;
             border: none;
             border-radius: 50px;
             color: #ffffff;
@@ -134,31 +91,46 @@
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+            margin-top: 8px;
         }
 
         .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+            background: #8b6fc4;
+            transform: translateY(-1px);
         }
 
         .btn-login:active {
             transform: translateY(0);
         }
 
+        .forgot-link {
+            display: block;
+            font-size: 14px;
+            color: #7C3AED;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 18px;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: #6B21A8;
+            text-decoration: underline;
+        }
+
         .divider {
             height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 25px 0;
+            background: #e5e7eb;
+            margin: 22px 0 18px;
         }
 
         .register-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            color: #6b7280;
         }
 
         .register-text a {
-            color: #ffffff;
+            color: #7C3AED;
             text-decoration: none;
             font-weight: 600;
         }
@@ -169,30 +141,42 @@
 
         .alert {
             padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            margin-bottom: 18px;
             font-size: 14px;
         }
 
         .alert-danger {
-            background: rgba(239, 68, 68, 0.9);
-            color: #ffffff;
-            border: 1px solid rgba(239, 68, 68, 0.5);
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
         }
 
         .alert-success {
-            background: rgba(34, 197, 94, 0.9);
-            color: #ffffff;
-            border: 1px solid rgba(34, 197, 94, 0.5);
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .error-text {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+            padding-left: 5px;
         }
 
         @media (max-width: 480px) {
             .login-card {
-                padding: 30px 25px;
+                padding: 30px 25px 25px;
             }
 
             .login-title {
                 font-size: 24px;
+            }
+
+            .login-logo {
+                width: 150px;
             }
         }
     </style>
@@ -224,7 +208,7 @@
                            required
                            autofocus>
                     @error('email')
-                        <span style="color: #fca5a5; font-size: 12px; margin-top: 5px; display: block; padding-left: 20px;">{{ $message }}</span>
+                        <span class="error-text">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -235,20 +219,14 @@
                            placeholder="Password"
                            required>
                     @error('password')
-                        <span style="color: #fca5a5; font-size: 12px; margin-top: 5px; display: block; padding-left: 20px;">{{ $message }}</span>
+                        <span class="error-text">{{ $message }}</span>
                     @enderror
-                </div>
-
-                <div class="remember-row">
-                    <div class="remember-check">
-                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label for="remember">Remember Me</label>
-                    </div>
-                    <a href="{{ route('password.request') }}" class="forgot-link">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="btn-login">Log In</button>
             </form>
+
+            <a href="{{ route('password.request') }}" class="forgot-link">Forgot Password?</a>
 
             <div class="divider"></div>
 
