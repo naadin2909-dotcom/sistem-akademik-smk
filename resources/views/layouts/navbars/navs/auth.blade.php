@@ -64,9 +64,6 @@
                                 <a href="{{ route('siswa.profile.edit') }}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
                             @endif
                         </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
-                        </li>
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
                             <a href="{{ route('logout') }}" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>

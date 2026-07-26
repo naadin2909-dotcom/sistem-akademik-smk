@@ -14,11 +14,13 @@ class Guru extends Model
         'nip',
         'nama_lengkap',
         'jenis_kelamin',
+        'agama',
         'tempat_lahir',
         'tanggal_lahir',
         'alamat',
         'no_telp',
         'mata_pelajaran',
+        'riwayat_pendidikan',
         'foto',
     ];
 

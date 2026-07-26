@@ -15,7 +15,17 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('profile.edit');
+        $user = auth()->user();
+        $siswa = null;
+        $guru = null;
+
+        if ($user->hasRole('siswa')) {
+            $siswa = $user->siswa;
+        } elseif ($user->hasRole('guru')) {
+            $guru = $user->guru;
+        }
+
+        return view('profile.edit', compact('user', 'siswa', 'guru'));
     }
 
     /**
