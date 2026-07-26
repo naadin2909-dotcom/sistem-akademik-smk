@@ -1,10 +1,6 @@
-[build]
-builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile"
-
 [deploy]
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
+restartPolicyMaxRetries = 5
 
 [watch]
 ignorePatterns = ["node_modules/**", "vendor/**", "storage/**", "*.md"]
