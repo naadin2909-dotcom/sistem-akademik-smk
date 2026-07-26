@@ -1,5 +1,8 @@
+[build]
+builder = "railpack"
+
 [deploy]
-restartPolicyType = "ON_FAILURE"
+restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5
 
 [watch]
