@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PORT=${PORT:-8080}
+PORT=${PORT:-8000}
 
 # Generate nginx.conf with correct port
 sed -i "s/__PORT__/$PORT/g" /etc/nginx/sites-available/default
