@@ -48,8 +48,7 @@ RUN cp .env.example .env \
     && php artisan key:generate --force \
     && php artisan migrate --force \
     && php artisan db:seed --force \
-    && php artisan storage:link --force \
-    && php artisan optimize
+    && php artisan storage:link --force
 
 # Expose port
 EXPOSE 8000
