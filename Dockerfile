@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Configure PHP-FPM to pass environment variables to Laravel
+RUN echo "clear_env = no" >> /usr/local/etc/php-fpm.d/www.conf
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -33,16 +36,11 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 # Copy application files
 COPY . .
 
-# Setup Laravel
-RUN touch database/database.sqlite \
-    && cp .env.example .env \
+# Setup: create .env, generate key, create sqlite file
+RUN cp .env.example .env \
     && php artisan key:generate --force \
-    && php artisan migrate --force \
-    && php artisan db:seed --force \
-    && php artisan storage:link --force
-
-# Fix permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/database \
+    && touch database/database.sqlite \
+    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/database \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Copy Nginx config and entrypoint
