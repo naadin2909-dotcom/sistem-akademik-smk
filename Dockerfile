@@ -43,8 +43,9 @@ RUN npm install && npm run build
 # Setup SQLite database
 RUN touch database/database.sqlite
 
-# Run Laravel commands
-RUN php artisan key:generate --force \
+# Copy .env.example to .env and run Laravel commands
+RUN cp .env.example .env \
+    && php artisan key:generate --force \
     && php artisan migrate --force \
     && php artisan db:seed --force \
     && php artisan storage:link --force \
